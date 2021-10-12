@@ -1,0 +1,16 @@
+.listInterventions{
+    display: block;
+    height: 80%;
+    overflow-y: auto;
+    margin: 50px;
+}
+
+.formulaire{
+   margin : 100px;
+}
+
+.table{
+    
+}
+
+
