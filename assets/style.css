@@ -1,16 +1,41 @@
-.listInterventions{
+.h3{
+    text-align: center;
+    padding: 10px;
+}
+.listInterventions {
     display: block;
-    height: 80%;
-    overflow-y: auto;
+    height: calc(100vh - 300px);
     margin: 50px;
+  }
+.table-head{
+    /* text-align: center; */
+    font-size: 1.1rem;
+    font-weight: 100;
+    color: rgb(212, 212, 50);
 }
 
-.formulaire{
-   margin : 100px;
+
+.table-body{
+    /* text-align: center; */
+    overflow-y: auto;
+}
+.btn-search{
+    width: 100%;
+}
+.search-form {
+    background-color:#dadee3;
+    padding: 8px;
 }
 
-.table{
-    
+select:focus,
+input:active,
+input:focus,
+button:focus,
+button:active,
+label:focus,
+.btn:active,
+.btn:focus {
+    outline: none !important;
+    -webkit-appearance: none;
+    box-shadow: none !important;
 }
-
-

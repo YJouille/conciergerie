@@ -1,18 +1,15 @@
 <?php
-
 require_once('Database.php');
 
 class TacheModel extends Database
 {
-
     /**
      * New Task method
      *
      * This method adds new task to task table
      * @param string $tache Task name
-     * @return integer id task in task table //////////à integrer!!!!! 
+     * @return integer id Last insert id task in task table 
      */
-
     public function newTache($tache)
     {
         try {
@@ -23,11 +20,13 @@ class TacheModel extends Database
             //echo $intervention->debugDumpParams();
             $intervention->execute();
             $intervention->closeCursor();
-            // return $base->lastInsertId();
+            return $base->lastInsertId();
         } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
+            $GLOBALS['errorMessage'] = 2;
+            //die('Erreur : ' . $e->getMessage());
         }
     }
+
     /**
      * List task method
      *
@@ -36,10 +35,15 @@ class TacheModel extends Database
      */
     public function listTaches()
     {
-        $intervention = $this->connect()->prepare('SELECT * FROM tache;');
-        $intervention->execute();
-        $result = $intervention->fetchAll(PDO::FETCH_ASSOC);
-        $intervention->closeCursor();
-        return $result;
+        try {
+            $intervention = $this->connect()->prepare('SELECT * FROM tache;');
+            $intervention->execute();
+            $result = $intervention->fetchAll(PDO::FETCH_ASSOC);
+            $intervention->closeCursor();
+            return $result;
+        } catch (Exception $e) {
+            $GLOBALS['errorMessage'] = 2;
+            //die('Erreur : ' . $e->getMessage());
+        }
     }
 }

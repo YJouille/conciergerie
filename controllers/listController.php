@@ -2,7 +2,7 @@
 require_once(__DIR__ . '/../models/InterventionModel.php');
 require_once(__DIR__ . '/../models/TacheModel.php');
 
-// Construct condition's SQL select query in order to build list intervention
+// Construct condition SQL select query in order to build list of interventions
 // $search is built with the fields of the search form
 
 $search = "";
@@ -25,11 +25,11 @@ if (isset($_POST['tacheSearch']) && $_POST['tacheSearch'] != '') {
         $search = " AND " . $search;
 }
 
-// Construct intervention's list
+// Construct intervention list
 $interventionModel = new InterventionModel();
 $listInterventions = $interventionModel->listInterventions($search);
 
-// Construct task's list
+// Construct task list
 $tacheModel = new TacheModel();
 $listTaches = $tacheModel->listTaches();
 

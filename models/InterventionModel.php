@@ -6,7 +6,7 @@ class InterventionModel extends Database
      * List interventions method
      *
      * This method list all interventions from intervention table
-     * @param string $search Search Criteria from search engine form
+     * @param string $search Search criteria from search engine form
      * @return array $result List of interventions
      */
     public function listInterventions($search)
@@ -27,7 +27,8 @@ class InterventionModel extends Database
             $intervention->closeCursor();
             return $result;
         } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
+            $GLOBALS['errorMessage'] = 2;
+            //die('Erreur : ' . $e->getMessage());
         }
     }
     /**
@@ -36,8 +37,6 @@ class InterventionModel extends Database
      * This method deletes an intervention from the intervention table
      * @param integer $id id of intervention to delete
      */
-
-    //Method pour supprimer une intervention
     public function deleteIntervention($id)
     {
         try {
@@ -46,11 +45,12 @@ class InterventionModel extends Database
             $intervention = $intervention->prepare($sql);
             $intervention->bindValue(':id', $id, PDO::PARAM_INT);
             // echo $intervention->debugDumpParams();
-            // die;
             $intervention->execute();
-            $intervention->closeCursor();
+            $GLOBALS['infoMessage'] = 2;
+            $intervention->closeCursor();  
         } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
+            $GLOBALS['errorMessage'] = 2;
+            //die('Erreur : ' . $e->getMessage());
         }
     }
 
@@ -60,32 +60,34 @@ class InterventionModel extends Database
      * This method add new intervention to intervention table
      * @param string $date New intervention date
      * @param integer $etage New intervention floor
-     * @param integer $idTache idTache of new intervention : revoir cette méthode pour faire avec un integer!!!!!!!!
+     * @param integer $idTache idTache of new intervention
      *
      */
-
-    public function newIntervention($date, $etage, $tache)
+    public function newIntervention($date, $etage, $idTache)
     {
-        if ($date == null || $etage == null || $tache == null) {
-            $GLOBALS['errorMessage'] = "Vous devez remplir le formulaire !";
+        if ($date == null || $etage == null || $idTache == null) {
+            $GLOBALS['errorMessage'] = 1;
         } else {
             $date = htmlspecialchars($date);
             $etage = htmlspecialchars($etage);
-            $tache = htmlspecialchars($tache);
+            $idTache = htmlspecialchars($idTache);
             try {
                 $sql = "INSERT INTO intervention
                 (date_intervention, etage_intervention, id_tache) VALUES
-                (:date, :etage ,(SELECT id_tache FROM tache WHERE libelle_tache =:tache));";
+                (:date, :etage , :id_tache );";
                 $intervention = $this->connect();
                 $intervention = $intervention->prepare($sql);
                 $intervention->bindValue(':date', $date, PDO::PARAM_STR);
                 $intervention->bindValue(':etage', $etage, PDO::PARAM_INT);
-                $intervention->bindValue(':tache', $tache, PDO::PARAM_STR);
+                $intervention->bindValue(':id_tache', $idTache, PDO::PARAM_INT);
                 //echo $intervention->debugDumpParams();
                 $intervention->execute();
+                $GLOBALS['infoMessage'] = 1;
                 $intervention->closeCursor();
+                
             } catch (Exception $e) {
-                die('Erreur : ' . $e->getMessage());
+                $GLOBALS['errorMessage'] = 2;
+                //die('Erreur : ' . $e->getMessage());
             }
         }
     }
@@ -110,9 +112,11 @@ class InterventionModel extends Database
             $intervention = $intervention->prepare($sql);
             //echo $intervention->debugDumpParams();
             $intervention->execute();
+            $GLOBALS['infoMessage'] = 3;
             $intervention->closeCursor();
         } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
+            $GLOBALS['errorMessage'] = 2;
+            //die('Erreur : ' . $e->getMessage());
         }
     }
 }

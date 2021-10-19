@@ -1,68 +1,76 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-
-  <title>Interventions</title>
-  <!-- Bootstrap core CSS -->
-  <!-- CSS only -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-  <!-- JavaScript Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/gif" href="./assets/icons/favicon.svg" />
-  <!-- CSS -->
-  <link href="./assets/style.css" rel="stylesheet">
-</head>
+<?php include(__DIR__ . '/header.php');?>
 
 <body>
   <header>
+
     <!-- Messages d'erreurs -->
     <?php
-    if (isset($GLOBALS['errorMessage'])) {
+    if (isset($_GET['error'])) {
     ?>
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Erreur !</strong> <?= $GLOBALS['errorMessage'] ?>
+        <strong>Erreur !</strong> <?= $errors[$_GET['error']] ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-    <?php } ?>
+    <?php }
+    if (isset($_GET['info'])) {
+      ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <?= $messages[$_GET['info']] ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <?php } ?>
 
     <!-- Nav bar -->
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
+      <!-- Logout button -->
+      <a href="?logout" class="btn btn-secondary" type="button">Logout</a>
 
-        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#newModal" type="button">Ajouter</button>
+        <!-- New intervention button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newModal" type="button">Ajouter une intervention</button>
 
         <!-- Search engine form -->
-        <form class="d-flex" method="POST" action="/crud/">
-          <input class="form-control" type="date" name="dateSearch" placeholder="Date intervention">
-          <input type="number" name="etageSearch" class="form-control" min="0" />
-          <select name="tacheSearch" class="form-select">
-          <option value="">---</option>
-            <?php
-            foreach ($listTaches as $tache) {
-            ?>
-              <option value="<?= $tache['id_tache']; ?>"><?= $tache['libelle_tache']; ?></option>
-            <?php
-            }
-            ?>
-          </select>
-          <button class="btn" type="submit"><img src="./assets/icons/search.svg"></button>
+        <form class="search-form d-flex rounded" method="POST" action="./"><!--/crud/-->
+          <div class="row">
+            <div class="col-3">
+              <input class="form-control" type="date" name="dateSearch" placeholder="Date intervention" title="Date de l'intervention">
+            </div>
+            <div class="col-2">
+              <input type="number" name="etageSearch" class="form-control" min="0" max="12" title="Étage de l'intervention" />
+            </div>
+            <div class="col-4">
+              <select name="tacheSearch" class="form-select" title="Tache de l'intervention">
+                <option value="">---</option>
+                <?php
+                foreach ($listTaches as $tache) {
+                ?>
+                  <option value="<?= $tache['id_tache']; ?>"><?= $tache['libelle_tache']; ?></option>
+                <?php
+                }
+                ?>
+              </select>
+            </div>
+            <div class="col-3">
+              <button class="btn btn-success btn-search" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechercher une intervention" type="submit">Rechercher</button>
+            </div>
+          </div>
         </form>
+        <!-- End search engine form -->
       </div>
     </nav>
     <!-- End nav bar -->
   </header>
 
+
+
+  
+  <p class="h3">Conciergerie</p>
+
+
+
   <!-- New intervention modal -->
   <div class="modal fade" id="newModal" tabindex="-1">
-    <form action="/crud/index.php?new" method="POST" class="formulaire row g-3">
-
+    <form action="./index.php?new" method="POST" class="formulaire row g-3">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -76,18 +84,18 @@
               <input type="date" class="form-control" name="date" placeholder="Date intervention">
             </div>
             <div class="col-md-12">
-              <label for="inputState" class="form-label">Etage</label>
-              <input type="number" name="etage" class="form-control" min="0" />
+              <label for="inputState" class="form-label">Étage</label>
+              <input type="number" name="etage" class="form-control" min="0" max="12" value="0" />
             </div>
 
             <div class="col-md-12">
-              <label for="inputState" class="form-label">Tache</label>
+              <label for="inputState" class="form-label">Tâche</label>
               <select id="tache" name="tache" class="form-select" onchange="if(this.value=='newTache') document.getElementById('newTache').style ='visibility:visible';
                 else  document.getElementById('newTache').style ='visibility:hidden';">
                 <?php
                 foreach ($listTaches as $tache) {
                 ?>
-                  <option><?= $tache['libelle_tache']; ?></option>
+                  <option value="<?= $tache['id_tache']; ?>"><?= $tache['libelle_tache']; ?></option>
                 <?php
                 }
                 ?>
@@ -97,8 +105,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            <button type="submit" class="btn btn-success">Ajouter</button>
           </div>
         </div>
       </div>
