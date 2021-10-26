@@ -1,5 +1,5 @@
 <?php include(__DIR__ . '/header.php'); ?>
-<body>
+
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4">
@@ -8,11 +8,11 @@
                         <h4>Connection</h4>
                         <div class="col-12">
                             <label>Login</label>
-                            <input type="text" name="login" class="form-control" placeholder="Entrez votre login">
+                            <input type="text" name="login" class="form-control" value="user" placeholder="Entrez votre login">
                         </div>
                         <div class="col-12">
                             <label>Password</label>
-                            <input type="password" name="pwd" class="form-control" placeholder="Entrez votre mot de passe">
+                            <input type="password" name="pwd" class="form-control" value="user" placeholder="Entrez votre mot de passe">
                         </div>
                         <div class="col-12">
                             <div class="form-check">
@@ -27,13 +27,11 @@
                     </form>
                     <hr class="mt-4">
                     <div class="col-12">
-                        <p class="text-center mb-0">Pas encore inscrit? <a href="views/signinView.php">S'inscrire</a></p>
+                        <p class="text-center mb-0">Pas encore inscrit? <a href="./index.php?signin">S'inscrire</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Bootstrap JS -->
-    <script src="https://www.markuptag.com/bootstrap/5/js/bootstrap.bundle.min.js"></script>
 </body>

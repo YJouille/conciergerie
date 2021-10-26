@@ -9,7 +9,6 @@ class Database
     public function connect()
     {
         //Database localisation localhost
-        //define('HOST', 'localhost');!!!!!!!!!!!!!!!!!!!
         // if(!defined('HOST')) define ('HOST', 'localhost');
         // //User name
         // if(!defined('USER')) define('USER', 'root');
@@ -19,7 +18,7 @@ class Database
         // if(!defined('DBNAME')) define('DBNAME', 'travaux');
 
         //Database localisation server
-        //define('HOST', 'localhost');!!!!!!!!!!!!!!!!!!!
+        
         if(!defined('HOST')) define ('HOST', 'localhost');
         //User name
         if(!defined('USER')) define('USER', 'yaminaj');

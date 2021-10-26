@@ -1,24 +1,6 @@
 <?php include(__DIR__ . '/header.php');?>
 
-<body>
-  <header>
 
-    <!-- Messages d'erreurs -->
-    <?php
-    if (isset($_GET['error'])) {
-    ?>
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Erreur !</strong> <?= $errors[$_GET['error']] ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <?php }
-    if (isset($_GET['info'])) {
-      ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <?= $messages[$_GET['info']] ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      <?php } ?>
 
     <!-- Nav bar -->
     <nav class="navbar navbar-light bg-light">

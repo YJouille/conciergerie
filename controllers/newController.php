@@ -18,13 +18,3 @@ if (isset($_POST['tache']) && $_POST['tache'] == "newTache") {
 $interventionModel = new InterventionModel();
 $interventionModel->newIntervention($_POST['date'], $_POST['etage'], $tacheId);
 
-// redirect to list (with error or message if set)
-$url = "./index.php";
-if(isset($GLOBALS['errorMessage'])) {
-    $url .= "?error=" . $GLOBALS['errorMessage'];
-}
-if(isset($GLOBALS['infoMessage'])) {
-    $url .= "?info=" . $GLOBALS['infoMessage'];
-}
-header('Location: ' . $url);
-exit;

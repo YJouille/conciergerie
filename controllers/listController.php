@@ -34,3 +34,4 @@ $tacheModel = new TacheModel();
 $listTaches = $tacheModel->listTaches();
 
 require(__DIR__ . '/../views/listView.php');
+exit;

@@ -1,11 +1,10 @@
 <?php include(__DIR__ . '/header.php'); ?>
 
-<body>
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4">
                 <div class="login-form bg-light mt-4 p-4">
-                    <form action="../?signin" method="POST" class="row g-3">
+                    <form action="./index.php?signin" method="POST" class="row g-3">
                         <h4>Inscription</h4>
                         <div class="col-12">
                             <label>Login</label>
@@ -24,6 +23,4 @@
             </div>
         </div>
     </div>  
-    <!-- Bootstrap JS -->
-    <script src="https://www.markuptag.com/bootstrap/5/js/bootstrap.bundle.min.js"></script>
 </body>
